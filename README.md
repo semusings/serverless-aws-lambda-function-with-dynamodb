@@ -1,0 +1,1 @@
+# 2-serveless-aws-lambda-function-with-dynamodb
