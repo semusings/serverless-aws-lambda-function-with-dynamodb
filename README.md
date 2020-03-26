@@ -1,1 +1,1 @@
-# 2-serveless-aws-lambda-function-with-dynamodb
+# Serverless Aws Lambda Function with DynamoDB
