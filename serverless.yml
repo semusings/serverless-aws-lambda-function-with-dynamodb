@@ -1,0 +1,47 @@
+service: order-service
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+  - Effect: "Allow"
+    Resource: "*"
+    Action:
+    - "dynamodb:*"
+
+package:
+  artifact: target/app-jar-with-dependencies.jar
+
+functions:
+  order-process:
+    handler: bhuwanupadhyay.serverless.order.OrderProcessHandler
+    events:
+    - http:
+        path: orders
+        method: post
+        cors: true
+
+  fetch-order:
+    handler: bhuwanupadhyay.serverless.order.FetchOrderHandler
+    events:
+    - http:
+        path: orders
+        method: get
+        cors: true
+
+resources:
+  Resources:
+    Order:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Order
+        AttributeDefinitions:
+        - AttributeName: orderId
+          AttributeType: S
+        KeySchema:
+        - AttributeName: orderId
+          KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
