@@ -6,28 +6,14 @@ COMMON_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/common.sh"
 # shellcheck source=src/cicd/common.sh
 source "${COMMON_SCRIPT}"
 
-cron () {
-    echo "Running PROJECT CRON task"
-    ${MVN_CMD} dependency-check:aggregate -Powasp
-}
-
-deploy () {
-    echo "Deploying SNAPSHOT build"
-    ${MVN_CMD} deploy -Pci
-
-    # also deploy the javadocs to the site
-    git clone -b gh-pages "https://github.com/${REPO_SLUG}.git" target/gh-pages/
-    ${MVN_CMD} javadoc:aggregate com.okta:okta-doclist-maven-plugin:generate jxr:aggregate -Ppub-docs -Pci
-}
-
 full_build () {
     echo "Running mvn install"
-    ${MVN_CMD} install -Pci
+    ${MVN_CMD} install
 }
 
 no_its_build () {
     echo "Skipping ITs, likely this build is a pull request from a fork"
-    ${MVN_CMD} install -DskipITs -Pci
+    ${MVN_CMD} install -DskipITs
 }
 
 # if this build was triggered via a cron job, just scan the dependencies
