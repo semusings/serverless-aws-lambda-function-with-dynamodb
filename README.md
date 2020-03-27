@@ -1,6 +1,20 @@
 # Serverless AWS Lambda Function with DynamoDB
 
-### To Build, Deploy and Test
-```bash
-./build-and-deploy.sh
+## Usage
+
+```
+---------------------------------------------------------------------------------------
+
+                                Serverless AWS Lambda Function with DynamoDB
+
+---------------------------------------------------------------------------------------
+
+Usage: make <target>
+
+Development
+  build                      Build the project
+
+Releasing
+  version                    Get the current build version
+  deploy                     Publish the project
 ```
